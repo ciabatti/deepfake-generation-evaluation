@@ -8,7 +8,7 @@ Questo repository raccoglie la documentazione tecnica, gli script di automazione
   * [Setup HunyuanPortrait](docs/01_setup_hunyuanportrait.md)
   * [Setup REFace](docs/02_setup_reface.md)
   * [Setup PersonaLive](docs/03_setup_personalive.md)
-  * [Relazione e Risultati Quantitativi](docs/04_relazione_risultati.md)
+  * [Relazione e Risultati Quantitativi](docs/04_relazione_risultat.md)
 * **`scripts/`**: Script Python e Bash sviluppati per la gestione batch, la pulizia dei dataset e l'orchestrazione multi-GPU.
 * **`notebooks/`**: Notebook Google Colab (`valutazione_deepfake.ipynb`) per l'esecuzione delle metriche NR-IQA (`pyiqa`) e di coerenza temporale (ArcFace, LPIPS, Jitter).
 * **`results/`**: Tabelle riepilogative (CSV) e grafici boxplot generati in fase di valutazione.
