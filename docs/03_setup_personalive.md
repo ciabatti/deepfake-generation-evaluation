@@ -19,7 +19,7 @@ Le operazioni sono state eseguite su un server Linux remoto equipaggiato con dop
 | Componente | Specifica / Configurazione |
 | :--- | :--- |
 | **GPU Utilizzate** | $2 \times$ NVIDIA RTX 5090 (architettura `sm_120`, 1 processo per GPU) |
-| **Ambiente Virtuale** | Conda (`personalive`, Python `3.10`) |
+| **Ambiente Virtuale** | Conda (Python `3.10`) |
 | **PyTorch e CUDA** | PyTorch `2.7.1+cu128` e Torchvision `0.22.1+cu128` (CUDA 12.8) |
 | **Repository Ufficiale** | `https://github.com/GVCLab/PersonaLive` |
 | **Spazio su Disco** | $\sim 25\text{--}30\text{ GB}$ (pesi del modello $\sim 15\text{ GB}$, ambiente Python e output video) |
@@ -123,7 +123,7 @@ for g in range(N_GPU):
 
 ### Comandi di Esecuzione Parallela
 
-All'interno di una sessione `tmux`, il batch da 100 video (con limite massimo di 100 frame per video, parametro `-L 100`) viene generato e lanciato con:
+All'interno di una sessione `tmux`, il batch da 100 video viene generato e lanciato con:
 
 ```bash
 python make_cases.py 5 20
