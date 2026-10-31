@@ -6,7 +6,7 @@ Questo documento descrive la configurazione dell'ambiente server, la risoluzione
 
 ## 1. Obiettivo e Panoramica del Modello
 
-**HunyuanPortrait** è un modello di *Face Reenactment* (animazione di ritratti) che trasferisce il movimento facciale e le espressioni da un video guida (*driving video*) a un'immagine statica di riferimento (*source image*).
+**HunyuanPortrait** è un modello di *Face Reenactment*  che trasferisce il movimento facciale e le espressioni da un video guida (*driving video*) a un'immagine statica di riferimento (*source image*).
 
 L'obiettivo dell'attività è stato la realizzazione di un'architettura automatizzata basata sulla tecnica del **Cross-Driving**: incrociare sistematicamente un set di immagini sorgente con un set di video guida per generare tutte le combinazioni possibili, riducendo al minimo l'intervento manuale e isolando un dataset finale pulito di **120 video validi**.
 
@@ -14,12 +14,12 @@ L'obiettivo dell'attività è stato la realizzazione di un'architettura automati
 
 ## 2. Ambiente Hardware e Requisiti di Sistema
 
-Le operazioni sono state eseguite su un server Linux remoto (`Lamarr`) equipaggiato con GPU di architettura NVIDIA Blackwell.
+Le operazioni sono state eseguite su un server Linux remoto equipaggiato con GPU di architettura NVIDIA Blackwell.
 
 | Componente | Specifica / Configurazione |
 | :--- | :--- |
 | **GPU Utilizzata** | $1 \times$ NVIDIA RTX 5090 (architettura `sm_120`) |
-| **Ambiente Virtuale** | Conda (`hunyuan_env`) |
+| **Ambiente Virtuale** | Conda |
 | **PyTorch e CUDA** | PyTorch `2.14.1+cu130` (compilato con CUDA 13.0) |
 | **Repository Ufficiale** | `https://github.com/Tencent-Hunyuan/HunyuanPortrait` |
 | **Accesso e Sessioni** | VPN WireGuard, SSH/SCP, **Tmux** per l'esecuzione persistente in background |
@@ -49,7 +49,7 @@ Per garantire il funzionamento sull'architettura della RTX 5090 ed evitare confl
 
 ## 4. Acquisizione e Preparazione del Dataset
 
-Per evitare artefatti dovuti a un errato allineamento facciale negli input, il dataset di partenza è stato estratto dagli asset pubblici di test del repository **LivePortrait** (*utilizzati esclusivamente a scopo di ricerca accademica*):
+Per evitare artefatti dovuti a un errato allineamento facciale negli input, il dataset di partenza è stato estratto dagli asset pubblici di test del repository **LivePortrait**:
 
 1. **Download selettivo del repository sorgente:**
    ```bash
@@ -66,9 +66,8 @@ Per evitare artefatti dovuti a un errato allineamento facciale negli input, il d
 
 Per evitare l'esecuzione manuale dei **312 comandi previsti** ($26 \text{ immagini} \times 12 \text{ video guida}$), è stato sviluppato lo script di orchestrazione `batch_generate.py`.
 
-### Caratteristiche dello Script di Orchestrazione
+### Caratteristiche dello Script di orchestrazione
 * **Isolamento *process-per-job*:** lo script invoca `inference.py` tramite `subprocess.run` per ciascuna combinazione. Sebbene questo approccio comporti il ricaricamento del modello in memoria ad ogni iterazione, garantisce che un eventuale errore su un singolo file non comprometta l'intero batch.
-* **Soppressione dell'output verboso:** gli stream standard della rete neurale vengono reindirizzati a ` subprocess.DEVNULL` per mantenere a terminale un log leggibile con orario, percentuale di avanzamento e coppia in lavorazione.
 * **Struttura modulare dell'output:** al termine di ogni inferenza, lo script individua l'ultima cartella generata in `results/`, preleva `full_resolution.mp4` e crea un pacchetto autoconsistente in `batch_outputs/img_X_guidato_da_drive_Y/` contenente l'immagine di input, il video guida e il video renderizzato (`risultato_finale.mp4`).
 
 ### Codice Sorgente (`batch_generate.py`)
@@ -148,7 +147,7 @@ print("=" * 60)
 Una volta completata l'esecuzione delle 312 combinazioni, il dataset è stato sottoposto a un processo di filtraggio in due fasi per garantire la validità dei campioni destinati alla valutazione quantitativa:
 
 1. **Filtraggio sul server ($312 \rightarrow 156 \text{ video}$):** sono state rimosse 13 immagini sorgente non idonee al task biometrico umano (12 raffiguranti animali e 1 file malformato che causava output corrotti).
-2. **Cernita post-download in locale ($156 \rightarrow 120 \text{ video}$):** dopo il trasferimento tramite SCP, un'ispezione visiva manuale ha permesso di scartare ulteriori 36 video affetti da artefatti visivi o anomalie di rendering.
+2. **Cernita post-download in locale ($156 \rightarrow 120 \text{ video}$):** dopo il trasferimento tramite SCP, un'ispezione visiva manuale ha permesso di scartare ulteriori 36 video affetti da artefatti visivi o corrotti.
 
 ### Specifiche del Dataset Finale e Metriche di Esecuzione
 
@@ -157,7 +156,7 @@ Una volta completata l'esecuzione delle 312 combinazioni, il dataset è stato so
 | **Campioni validi finali** | **120 video** (`.mp4`, codec H.264) |
 | **Framerate e Durata** | 25 o 30 fps (ereditato dal video guida); da 78 a 587 frame (**mediana: 301 frame**, $\sim 10\text{ s}$) |
 | **Risoluzione** | Variabile in base all'input (es. $720 \times 720$, $600 \times 704$, $708 \times 648$) |
-| **Finestra temporale batch** | 22 ore e 53 minuti (ricostruita dai timestamp dei file `.mp4` su filesystem) |
+| **Finestra temporale batch** | 22 ore e 53 minuti  |
 | **Tempo medio per job** | **$\sim 4 \text{ min } 25 \text{ s}$** (incluso il caricamento completo dei pesi ad ogni iterazione) |
 
 ---
@@ -167,5 +166,4 @@ Una volta completata l'esecuzione delle 312 combinazioni, il dataset è stato so
 | Problema Riscontrato | Causa Tecnica | Soluzione Adottata |
 | :--- | :--- | :--- |
 | Incompatibilità architettura GPU | Kernel CUDA standard non compilati per RTX 5090 | Ambiente isolato con PyTorch `2.14.1+cu130` |
-| Presenza di campioni non umani o corrotti | Asset di test *LivePortrait* contenenti anche volti animali | Rimozione a monte di 13 sorgenti e scarto manuale di 36 output anomali |
-| Rischio interruzione processi lunghi via SSH | Disconnessione del client locale durante le ~23 ore di calcolo | Esecuzione incapsulata in sessione `tmux` persistente |
+| Presenza di campioni non umani o corrotti | Asset di test *LivePortrait* contenenti anche volti animali | Rimozione a monte dei sorgenti non idonei e scarto manuale degli output anomali |
