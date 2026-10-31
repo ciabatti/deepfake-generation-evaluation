@@ -183,4 +183,4 @@ Lo script ha elaborato l'intero batch in background all'interno di `tmux`.
 | `ModuleNotFoundError: No module named 'taming'` / `'ldm'` | Fallimento del link simbolico nelle installazioni editable | Creazione manuale dei file `taming_path.pth` e `reface_path.pth` in `site-packages` |
 | Errore `cannot enable executable stack` su `bezier` | Incompatibilità del binario precompilato con kernel Linux recenti | Rimozione del flag `execstack` tramite `patchelf --clear-execstack` |
 | Errore di connessione a Hugging Face per il *Safety Checker* | Libreria `transformers` datata | Download manuale in `~/safety_checker` e sostituzione del path locale negli script |
-| Generazione di 10.000 immagini invece di 100 e maschera grigia | Prodotto incrociato nativo e bug di naming su `*_inpaint.png` | Isolamento 1-a-1 in `/tmp` tramite `loop_final.sh` e recupero dell'output reale senza suffisso |
+
