@@ -8,7 +8,7 @@ Questo documento descrive la configurazione dell'ambiente server, la risoluzione
 
 **REFace** è un modello basato su architettura di diffusione (*Latent Diffusion*) progettato per il **Face Swap** su immagini statiche: trasferisce l'identità biometrica di un volto sorgente (*source*) all'interno di un'immagine destinataria (*target*), preservando posa, espressione, illuminazione e sfondo del target.
 
-L'obiettivo dell'attività è stato configurare il modello su hardware di ultima generazione e automatizzare la generazione di **100 coppie disgiunte** estratte dal dataset pubblico **FFHQ**, isolando **99 immagini valide** in formato $512 \times 512$.
+L'obiettivo dell'attività è stato configurare il modello su hardware di ultima generazione e automatizzare la generazione di **100 coppie disgiunte** estratte dal dataset pubblico **FFHQ**, isolando **100 immagini valide** in formato $512 \times 512$.
 
 ---
 
@@ -19,12 +19,10 @@ Le operazioni sono state eseguite su un server Linux remoto dotato di due GPU NV
 | Componente | Specifica / Configurazione |
 | :--- | :--- |
 | **GPU Utilizzata** | $1 \times$ NVIDIA RTX 5090 (architettura `sm_120`, selezionata tramite indice GPU libero) |
-| **Ambiente Virtuale** | Conda (`REFace`, Python `3.10.13`) |
+| **Ambiente Virtuale** | Conda ( Python `3.10.13`) |
 | **PyTorch e CUDA** | PyTorch con indice `cu128` (CUDA 12.8 per supporto `sm_120`) |
 | **Repository Ufficiale** | `https://github.com/Sanoojan/REFace` (pesi da Hugging Face `Sanoojan/REFace`) |
 | **Spazio su Disco** | $\sim 30\text{ GB}$ (checkpoint $\sim 7\text{ GB}$, dataset FFHQ $\sim 2\text{ GB}$, ambiente Conda) |
-
-*Nota etica e di licenza: il modello pre-addestrato su CelebAMask-HQ (CreativeML Open RAIL-M) e il dataset FFHQ (CC BY-NC-SA) sono stati impiegati esclusivamente per finalità di ricerca accademica.*
 
 ---
 
@@ -164,16 +162,16 @@ echo "FATTO: ciclo terminato"
 
 ## 6. Controllo Qualità, Pulizia del Dataset e Tempi
 
-Lo script ha elaborato l'intero batch in background all'interno di `tmux`, saltando automaticamente 1 coppia in cui il rilevatore facciale preliminare non è riuscito ad allineare i landmark.
+Lo script ha elaborato l'intero batch in background all'interno di `tmux`.
 
 | Parametro | Valore Rilevato |
 | :--- | :--- |
-| **Campioni validi finali** | **99 immagini** (`swapped.png`, formato PNG) su 100 coppie previste |
+| **Campioni validi finali** | **100 immagini** (`swapped.png`, formato PNG) su 100 coppie previste |
 | **Risoluzione Input / Output** | Input $128 \times 128$ (thumbnail FFHQ) $\rightarrow$ Output $512 \times 512$ |
 | **Tempo totale di generazione** | **$\sim 4 \text{ ore e } 45 \text{ minuti}$** (su singola GPU RTX 5090) |
 | **Tempo medio per coppia** | **$\sim 2 \text{ min } 50 \text{ s}$** (incluso il ricaricamento del modello ad ogni iterazione) |
 
-*Nota qualitativa:* poiché il modello opera nativamente a $512 \times 512$ ma riceve in ingresso thumbnail a $128 \times 128$, le immagini generate presentano una morbidezza fisiologica dovuta all'upscaling e un'inquadratura molto ravvicinata sul volto.
+*Nota qualitativa:* poiché il modello opera nativamente a $512 \times 512$ ma riceve in ingresso immagini a $128 \times 128$, le immagini generate presentano una morbidezza fisiologica dovuta all'upscaling e un'inquadratura molto ravvicinata sul volto.
 
 ---
 
