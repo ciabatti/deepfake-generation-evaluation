@@ -14,6 +14,6 @@ Questo repository raccoglie la documentazione tecnica, gli script di automazione
 * **`results/`**: Tabelle riepilogative (CSV) e grafici boxplot generati in fase di valutazione.
 
 ## Sintesi dei Risultati
-* **HunyuanPortrait**: Eccellente qualità visiva del singolo fotogramma e fluidità locale, ma maggiore variabilità e decadimento della somiglianza (*identity drift*) sui video lunghi.
-* **PersonaLive**: Straordinaria stabilità dell'identità nel tempo ($CSIM > 0.90$) ed elevata efficienza computazionale (multi-GPU), con una qualità percettiva media leggermente inferiore.
-* **REFace**: Solido sul face swap statico, ma fortemente dipendente dalla risoluzione e dal framing del dataset di partenza (FFHQ).
+* **PersonaLive**: Qualità visiva del fotogramma nettamente superiore (migliori punteggi IQA) ed elevatissima efficienza computazionale in batch (architettura multi-GPU *in-memory*). Tuttavia, a parità di dataset, subisce lo stesso decadimento dell'identità (*identity drift*) di HunyuanPortrait sui movimenti ampi.
+* **HunyuanPortrait**: Conserva il primato sulla fluidità pura del movimento (minor flickering tra frame adiacenti e interpolazione più morbida), ma presenta una resa estetica del singolo frame più variabile e mediamente inferiore a PersonaLive.
+* **REFace**: Solido sul face swap statico, ma fortemente dipendente dalla risoluzione e dal framing del dataset di partenza (FFHQ), che ha limitato il rilevamento facciale per il calcolo delle metriche al 40,4% del campione.
