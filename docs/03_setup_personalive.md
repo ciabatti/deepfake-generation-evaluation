@@ -48,7 +48,7 @@ Per garantire un confronto perfettamente bilanciato con HunyuanPortrait, gli inp
 
 * **Pulizia preliminare:** Sono state analizzate 26 immagini sorgente e 12 video guida.
 * **Filtraggio:** Sono state escluse 12 immagini (soggetti animali o file corrotti) incompatibili con il rilevamento facciale richiesto dal modello.
-* **Dataset Finale:** **14 immagini valide** e **12 video guida**, che genereranno tutte le combinazioni possibili ($14 \times 12 = \textbf{168 video finali}$).
+* **Dataset Finale:** **14 immagini valide** e **12 video guida**, che genereranno tutte le combinazioni possibili ($14 \times 12 = \textbf{168 video finali, di cui solo 100 utilizzati per le analisi successive}$).
 
 ## 5. Automazione della Generazione Batch
 
