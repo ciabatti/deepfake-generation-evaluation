@@ -2,7 +2,7 @@
 
 ## 1. Obiettivo e Setup dei Dati
 
-L'obiettivo è confrontare oggettivamente la qualità visiva e la coerenza temporale dei contenuti generati da tre modelli. **Cruciale in questa analisi è il confronto 1:1 tra HunyuanPortrait e PersonaLive**, eseguiti esattamente sullo stesso dataset di partenza (asset di *LivePortrait*), eliminando ogni bias demografico e di formato.
+L'obiettivo è confrontare oggettivamente la qualità visiva e la coerenza temporale dei contenuti generati da tre modelli. **Cruciale in questa analisi è il confronto tra HunyuanPortrait e PersonaLive**, eseguiti esattamente sullo stesso dataset di partenza (asset di *LivePortrait*).
 
 | Parametro | HunyuanPortrait | PersonaLive | REFace |
 | :--- | :--- | :--- | :--- |
