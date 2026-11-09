@@ -1,4 +1,4 @@
-# Valutazione Quantitativa di HunyuanPortrait, PersonaLive e REFace
+# Valutazione di HunyuanPortrait, PersonaLive e REFace
 
 ## 1. Obiettivo e Setup dei Dati
 
