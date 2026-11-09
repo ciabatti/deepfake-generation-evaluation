@@ -32,11 +32,11 @@ PersonaLive domina su tutte le principali metriche di qualità dell'immagine (`t
 
 Il test sullo stesso dataset rivela che la pretesa superiorità di PersonaLive sulla coerenza dell'identità era un bias legato all'inattività dei dataset precedenti.
 
-| Metrica | HunyuanPortrait | PersonaLive | p |
-| :--- | :--- | :--- | :--- |
-| **CSIM_drift** $\uparrow$ | 0,7215 ± 0,1669 | 0,7211 ± 0,2183 | *Non Sig.* |
-| **Flicker LPIPS** $\downarrow$ | 0,0058 ± 0,0093 | 0,0101 ± 0,0152 | *Sig.* |
-| **CSIM_adj** $\uparrow$ | 0,9748 ± 0,0204 | 0,9651 ± 0,0334 | *Sig.* |
+| Metrica | HunyuanPortrait | PersonaLive | 
+| :--- | :--- | :--- | 
+| **CSIM_drift** $\uparrow$ | 0,7215 ± 0,1669 | 0,7211 ± 0,2183 | 
+| **Flicker LPIPS** $\downarrow$ | 0,0058 ± 0,0093 | 0,0101 ± 0,0152 | 
+| **CSIM_adj** $\uparrow$ | 0,9748 ± 0,0204 | 0,9651 ± 0,0334 | 
 
 Sui movimenti ampi e prolungati tipici di *LivePortrait*, **entrambi i modelli mostrano un'identica perdita di identità nel tempo** (`CSIM_drift` 0.72). HunyuanPortrait mantiene però un vantaggio tecnico strutturale sulla fluidità di transizione locale, garantendo un minore sfarfallio visivo (`Flicker LPIPS` 0.0058 contro 0.0101) e una migliore aderenza tra frame contigui (`CSIM_adj`).
 
