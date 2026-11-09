@@ -2,17 +2,13 @@
 
 ## 1. Obiettivo e Setup dei Dati
 
-L'obiettivo è confrontare oggettivamente la qualità visiva e la coerenza temporale dei contenuti generati da tre modelli. **Cruciale in questa analisi è il confronto tra HunyuanPortrait e PersonaLive**, eseguiti esattamente sullo stesso dataset di partenza (asset di *LivePortrait*).
+L'obiettivo è confrontare oggettivamente la qualità visiva e la coerenza temporale dei contenuti generati da tre modelli. **Cruciale in questa analisi è il confronto tra HunyuanPortrait e PersonaLive**, eseguiti sullo stesso dataset di partenza (asset di *LivePortrait*).
 
 | Parametro | HunyuanPortrait | PersonaLive | REFace |
 | :--- | :--- | :--- | :--- |
 | **Campioni analizzati** | 120 video | 100 video | 99 immagini |
 | **Dati di partenza** | Asset pubblici *LivePortrait* | Asset pubblici *LivePortrait* | Coppie casuali *FFHQ* 128×128 |
 | **Formato Output** | H.264, 78–587 frame, risoluzioni variabili | H.264, max 100 frame (4s a 25fps), 512×512 | PNG 512×512 |
-| **Età stimata (mediana)** | 23,5 anni | 23,5 anni | 28 anni |
-| **Demografia (donne)** | ~80% | ~80% | 57% |
-
-*Nota metodologica:* Età e sesso sono stime generate automaticamente da InsightFace. Avendo allineato i dataset video, HunyuanPortrait e PersonaLive operano sulla medesima distribuzione.
 
 ## 2. Metodologia di Valutazione
 
@@ -30,11 +26,11 @@ A parità di dataset di input, l'architettura basata su diffusione di PersonaLiv
 | **brisque** $\downarrow$ | 38,7 ± 16,1 | 18,3 ± 8,6 | 52,1 ± 4,9 | 4.501e-24 |
 | **niqe** $\downarrow$ | 6,18 ± 1,40 | 5,00 ± 1,25 | 7,30 ± 0,63 | 1.374e-10 |
 
-PersonaLive domina su tutte le principali metriche di qualità dell'immagine (`topiq_nr-face`, `clipiqa`, `brisque`, `niqe`) con una significatività statistica estremamente marcata ($p < 0.01$). HunyuanPortrait si conferma molto variabile tra un video e l'altro. REFace sconta l'upscaling dai thumbnail 128x128. I valori IQA di REFace sono calcolati sul 40,4% delle immagini a causa dell'inquadratura estremamente ravvicinata di FFHQ.
+PersonaLive domina su tutte le principali metriche di qualità dell'immagine (`topiq_nr-face`, `clipiqa`, `brisque`, `niqe`) con una significatività statistica marcata ($p < 0.01$). HunyuanPortrait si conferma molto variabile tra un video e l'altro. REFace sconta l'upscaling dai thumbnail 128x128. I valori IQA di REFace sono calcolati sul 40,4% delle immagini a causa dell'inquadratura estremamente ravvicinata di FFHQ.
 
 ## 4. Risultati: Coerenza Temporale
 
-Il test 1:1 sullo stesso dataset rivela che la pretesa superiorità di PersonaLive sulla coerenza dell'identità era un bias legato all'inattività dei dataset precedenti.
+Il test sullo stesso dataset rivela che la pretesa superiorità di PersonaLive sulla coerenza dell'identità era un bias legato all'inattività dei dataset precedenti.
 
 | Metrica | HunyuanPortrait | PersonaLive | p |
 | :--- | :--- | :--- | :--- |
